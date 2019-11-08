@@ -44,6 +44,9 @@ export default {
             })
                 .then(user => {
                     console.log('Register success')
+					this.registerData.name = ''
+					this.registerData.email = ''
+					this.registerData.password = ''
                 })
                 .catch(err => {
                     console.log(err)
