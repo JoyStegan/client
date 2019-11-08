@@ -1,11 +1,11 @@
 <template>
     <b-container class="bv-example-row p-5">
         <h3 class="text-center">Feed</h3>
-        <b-row v-for="d in translated" :key="d.data.url" class="py-5">
-                <b-img :src="d.data.url"  class="myFlex data-img myWidth"></b-img>
+        <b-row v-for="d in translated" :key="d.url" class="py-5">
+                <b-img :src="d.url"  class="myFlex data-img myWidth"></b-img>
                 <div class="abolute-pos myWidth ">
                     <p class="data-text myFlex " >
-                        {{d.data.translation}}  
+                        {{d.translation}}  
                     </p> 
                 </div>
           
