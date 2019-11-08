@@ -2,14 +2,13 @@
     <b-container class="bv-example-row p-5">
         <h3 class="text-center">Feed</h3>
         <b-row v-for="d in translated" :key="d.data.url" class="py-5">
-            <b-col>
-                <b-img :src="d.data.url"  class="data-img abolute-pos"></b-img>
-                <div class="abolute-pos">
-                    <p class="data-text">
+                <b-img :src="d.data.url"  class="myFlex data-img myWidth"></b-img>
+                <div class="abolute-pos myWidth ">
+                    <p class="data-text myFlex " >
                         {{d.data.translation}}  
                     </p> 
                 </div>
-            </b-col>
+          
         </b-row>
     </b-container>
 </template>
@@ -41,6 +40,17 @@ export default {
         this.fetchTranslatedData()
     }
 }
+
+
+$( document ).ready( function() {
+    $( ".data-img" ).mouseenter(function() {
+        $( ".data-text" ).css("color", "black");
+    });
+    $( ".data-img" ).mouseout(function() {
+        console.log('asdjajkdh')
+        $( ".data-text" ).css("color", "transparent");
+    });
+});
 </script>
 
 <style>
@@ -53,6 +63,7 @@ export default {
     }
 
     .data-text {
+        color: transparent;
         position: absolute;
         top: 100px;
         z-index: 2;
@@ -64,9 +75,18 @@ export default {
         font-size: 18px;
     }
 
+    .myWidth{
+        width: 700px;
+        height: auto;
+    }
+
     .abolute-pos {
         position: absolute;
         width: 700px;
+    }
+
+    .myFlex{
+        margin: 0 auto;
     }
     
 </style>
