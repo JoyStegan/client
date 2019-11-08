@@ -3,7 +3,7 @@
     <Navbar @change-page="changePage"></Navbar>
     <transition name="home" mode="out-in">
       <Content v-if="page === 'home'" key="home"></Content>
-      <Uploader v-if="page === 'uploader'" key="uploader"></Uploader>
+      <Uploader v-if="page === 'uploader'" key="uploader" @go="changePage"></Uploader>
     </transition>
   </div>
 </template>
