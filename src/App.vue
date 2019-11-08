@@ -1,11 +1,11 @@
 <template>
   <div>
-    <Login></Login>
-    <Register></Register>
-    <Navbar @change-page="changePage"></Navbar>
+    <Login @login="changeLogin" @change-page="changePage" v-if="!isLogin && page === 'login'"></Login>
+    <Register v-if="page === 'register'" @change-page="changePage"></Register>
+    <Navbar v-if="isLogin" @change-page="changePage" @login="changeLogin"></Navbar>
     <transition name="home" mode="out-in">
-      <Content v-if="page === 'home'" key="home"></Content>
-      <Uploader v-if="page === 'uploader'" key="uploader" @go="changePage"></Uploader>
+      <Content v-if="page === 'home' && isLogin" key="home"></Content>
+      <Uploader v-if="page === 'uploader' && isLogin" key="uploader" @go="changePage"></Uploader>
     </transition>
   </div>
 </template>
@@ -21,21 +21,28 @@ export default {
   name: 'App',
   components: {
     Login,
-    Register
-  },
-  data() {
-    return {
-      page: "home"
-    };
-  },
-  components: {
+    Register,
     Navbar,
     Content,
     Uploader
   },
+  data() {
+    return {
+      page: "login",
+      isLogin: false
+    };
+  },
   methods: {
     changePage(value) {
       this.page = value;
+    },
+    changeLogin(value) {
+      this.isLogin = value
+    }
+  },
+  created () {
+    if (localStorage.getItem('token')) {
+      this.isLogin = true
     }
   }
 };
