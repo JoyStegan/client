@@ -35,6 +35,7 @@ export default {
         },
         logout () {
           localStorage.removeItem('token')
+          this.changePage('login')
           this.$emit('login', false)
         }
     }
