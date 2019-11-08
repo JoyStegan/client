@@ -43,6 +43,7 @@ export default {
   created () {
     if (localStorage.getItem('token')) {
       this.isLogin = true
+      this.page = 'home'
     }
   }
 };

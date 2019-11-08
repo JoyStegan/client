@@ -52,6 +52,7 @@ export default {
 									this.loginData.email = ''
 									this.loginData.password = ''
 									this.$emit('login', true)
+									this.changePage('home')
 									Toast.fire({
 										icon: 'success',
 										title: 'Signed in successfully'

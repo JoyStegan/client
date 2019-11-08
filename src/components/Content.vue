@@ -213,9 +213,6 @@ export default {
     },
     created() {
         this.fetchTranslatedData()
-    },
-    fetchUrl(url) {
-        this.u
     }
 }
 
