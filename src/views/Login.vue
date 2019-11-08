@@ -39,6 +39,8 @@ export default {
                 }
             })
                 .then(user => {
+					this.loginData.email = ''
+					this.loginData.password = ''
                     console.log('Success')
                 })
                 .catch(err => {
