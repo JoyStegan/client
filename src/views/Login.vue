@@ -10,7 +10,7 @@
 				<input type="text" v-model="loginData.email" placeholder="Email" name="user"><br>
 				<input type="password" v-model="loginData.password" placeholder="Password" name="password"><br>
 				<input type="button" @click="login()" value="Login">
-                <h3>Doesn't have an account? </h3> 
+                <h3>Don't have an account? </h3> 
                 <button type="button" id="register-btn">Register HERE</button>
 		</div>
     </div>
