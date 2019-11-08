@@ -7,18 +7,21 @@
 		</div>
 		<br>
 		<div class="login">
+			<form @submit.prevent="register">
                 <input style="margin-bottom: 10px;" v-model="registerData.name" type="text" placeholder="Name" name="user"><br>
 				<input type="text" v-model="registerData.email" placeholder="Email" name="email"><br>
 				<input type="password" v-model="registerData.password" placeholder="Password" name="password"><br>
-				<input type="button" @click="register()" value="Register">
-                <h3>Already have an account? </h3> 
-                <button type="button" id="login-btn">Login HERE</button>
+				<input type="submit" class="btn btn-primary" value="Register">
+			</form>
+                <h6 style="color:white">Already have an account? </h6> 
+                <button type="button" id="login-btn" @click="changePage('login')">Login HERE</button>
 		</div>
     </div>
 </template>
 
 <script>
-import axios from 'axios'
+import axios from '../../config/axios'
+import Swal from 'sweetalert2'
 
 export default {
     name: 'Register',
@@ -28,7 +31,13 @@ export default {
                 name: '',
                 email: '',
                 login: ''
-            }
+            },
+						Toast: Swal.mixin({
+							toast: true,
+							position: 'top-end',
+							showConfirmButton: false,
+							timer: 3000
+						})
         }
     },
     methods: {
@@ -40,17 +49,25 @@ export default {
                     email: this.registerData.email,
                     password: this.registerData.password
                 },
-                url: `http://localhost:3000/register`
+                url: `/register`
             })
                 .then(user => {
                     console.log('Register success')
-					this.registerData.name = ''
-					this.registerData.email = ''
-					this.registerData.password = ''
+										this.registerData.name = ''
+										this.registerData.email = ''
+										this.registerData.password = ''
+										this.changePage('login')
+										Toast.fire({
+											icon: 'success',
+											title: 'Signed in successfully'
+										})
                 })
                 .catch(err => {
                     console.log(err)
                 })
+				},
+				changePage: function(value){
+            this.$emit('change-page', value);
         }
     }
 

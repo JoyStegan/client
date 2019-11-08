@@ -7,17 +7,20 @@
 		</div>
 		<br>
 		<div class="login">
+			<form @submit.prevent="login">
 				<input type="text" v-model="loginData.email" placeholder="Email" name="user"><br>
 				<input type="password" v-model="loginData.password" placeholder="Password" name="password"><br>
-				<input type="button" @click="login()" value="Login">
-                <h3>Don't have an account? </h3> 
-                <button type="button" id="register-btn">Register HERE</button>
+				<input type="submit" value="Login">
+				<h6 style="color: white">Don't have an account? </h6> 
+				<button type="button" id="register-btn" @click="changePage('register')">Register HERE</button>
+			</form>
 		</div>
     </div>
 </template>
 
 <script>
-import axios from 'axios'
+import axios from '../../config/axios'
+import Swal from 'sweetalert2'
 export default {
     name: 'Login',
     data() {
@@ -25,27 +28,42 @@ export default {
             loginData: {
                 email: '',
                 password: ''
-            }
+						},
+						Toast: Swal.mixin({
+							toast: true,
+							position: 'top-end',
+							showConfirmButton: false,
+							timer: 3000
+						})
         }
     },
     methods: {
         login() {
             axios({
                 method: 'post',
-                url: `http://localhost:3000/login`,
+                url: `/login`,
                 data: {
                     email: this.loginData.email,
                     password: this.loginData.password
                 }
             })
-                .then(user => {
-					this.loginData.email = ''
-					this.loginData.password = ''
-                    console.log('Success')
+                .then(({data}) => {
+									localStorage.setItem('token', data.token)
+									this.loginData.email = ''
+									this.loginData.password = ''
+									this.$emit('login', true)
+									Toast.fire({
+										icon: 'success',
+										title: 'Signed in successfully'
+									})
+									console.log('Success')
                 })
                 .catch(err => {
                     console.log(err)
                 })
+				},
+				changePage: function(value){
+            this.$emit('change-page', value);
         }
     }
 
@@ -168,7 +186,7 @@ body{
 	margin-top: 10px;
 }
 
-.login input[type=button]{
+.login input[type=submit]{
 	width: 260px;
 	height: 35px;
 	background: #fff;
@@ -183,11 +201,11 @@ body{
 	margin-top: 10px;
 }
 
-.login input[type=button]:hover{
+.login input[type=submit]:hover{
 	opacity: 0.8;
 }
 
-.login input[type=button]:active{
+.login input[type=submit]:active{
 	opacity: 0.6;
 }
 
@@ -201,7 +219,7 @@ body{
 	border: 1px solid rgba(255,255,255,0.9);
 }
 
-.login input[type=button]:focus{
+.login input[type=submit]:focus{
 	outline: none;
 }
 

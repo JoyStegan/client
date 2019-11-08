@@ -16,8 +16,7 @@
           <template v-slot:button-content>
             <em>User</em>
           </template>
-          <b-dropdown-item href="#">Profile</b-dropdown-item>
-          <b-dropdown-item href="#">Sign Out</b-dropdown-item>
+          <b-dropdown-item @click="logout" href="#">Sign Out</b-dropdown-item>
         </b-nav-item-dropdown>
       </b-navbar-nav>
     </b-collapse>
@@ -33,6 +32,10 @@ export default {
     methods: {
         changePage: function(value){
             this.$emit('change-page', value);
+        },
+        logout () {
+          localStorage.removeItem('token')
+          this.$emit('login', false)
         }
     }
 }
