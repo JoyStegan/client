@@ -1,5 +1,7 @@
 <template>
   <div>
+    <Login></Login>
+    <Register></Register>
     <Navbar @change-page="changePage"></Navbar>
     <transition name="home" mode="out-in">
       <Content v-if="page === 'home'" key="home"></Content>
@@ -12,8 +14,15 @@
 import Navbar from "./components/Navbar";
 import Content from "./components/Content";
 import Uploader from "./components/Uploader";
+import Login from './views/Login'
+import Register from './views/Register'
 
 export default {
+  name: 'App',
+  components: {
+    Login,
+    Register
+  },
   data() {
     return {
       page: "home"
