@@ -1,8 +1,9 @@
 <template>
     <b-container class="bv-example-row p-5">
-        <h3 class="text-center">Feed</h3>
-        <b-row v-for="d in translated" :key="d.url" class="py-5">
-                <b-img :src="d.url"  class="myFlex data-img myWidth"></b-img>
+        <b-row v-for="(d, i) in translated" :key="d.url" class="py-5">
+                
+                <p>{{d.url}}</p>
+                <b-img :src="d.url" class="myFlex data-img myWidth" @mouseover="mouseOver(i)" @mouseout="mouseLeave(i)"></b-img>
                 <div class="abolute-pos myWidth ">
                     <p class="data-text myFlex " >
                         {{d.translation}}  
@@ -19,7 +20,8 @@ import axios from '../../config/axios'
 export default {
     data(){
         return {
-            translated: []
+            translated: [],
+            imageUrl: ''
         };
     },
     methods: {
@@ -34,23 +36,25 @@ export default {
             .catch( err => {
                 console.log(err)
             })
+        },
+        mouseOver: function(i) {
+            let text = document.getElementsByClassName('data-text')[i];
+            text.style.color = 'black';
+        },
+        mouseLeave: function(i) {
+            let text = document.getElementsByClassName('data-text')[i];
+            text.style.color = 'transparent';
         }
     },
     created() {
         this.fetchTranslatedData()
+    },
+    fetchUrl(url) {
+        this.u
     }
 }
 
 
-$( document ).ready( function() {
-    $( ".data-img" ).mouseenter(function() {
-        $( ".data-text" ).css("color", "black");
-    });
-    $( ".data-img" ).mouseout(function() {
-        console.log('asdjajkdh')
-        $( ".data-text" ).css("color", "transparent");
-    });
-});
 </script>
 
 <style>
@@ -58,26 +62,27 @@ $( document ).ready( function() {
         transition: all .4s ease-in-out;
     }
     .data-img:hover {
-        opacity: 0.2;
+        opacity: 0.1;
         transform: scale(1.2);
     }
 
     .data-text {
         color: transparent;
         position: absolute;
-        top: 100px;
-        z-index: 2;
+        top: 50%;
         width: 400px;
         margin-left: -200px;
         left: 50%;
         text-align: center;
-        line-height: 1.6;
-        font-size: 18px;
+        font-size: 14px;
     }
 
     .myWidth{
-        width: 700px;
-        height: auto;
+        /* width: 700px;
+        height: auto; */
+        width: 500px;
+        height: 500px;
+        object-fit: contain;
     }
 
     .abolute-pos {
